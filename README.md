@@ -27,7 +27,7 @@ pip install streamlit
 
 ### Usage
 To use this project, follow these steps:
-1. Install the required packages: pip install -r packages
+1. Install the required packages: pip install packages
 2. Run the Streamlit app: streamlit run you.py
 
 ### Features
