@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/you.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-108">
-              <caret line="318" column="26" selection-start-line="318" selection-start-column="26" selection-end-line="318" selection-end-column="26" />
+            <state relative-caret-position="-2335">
+              <caret line="251" column="35" lean-forward="true" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -47,6 +47,7 @@
       <find>insertchannel</find>
       <find>getchannelInfo</find>
       <find>commentdata_list</find>
+      <find>pd</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -57,7 +58,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="width" value="1346" />
     <option name="height" value="735" />
@@ -73,6 +74,10 @@
             <path>
               <item name="you" type="b2602c69:ProjectViewProjectNode" />
               <item name="you" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="you" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -183,10 +188,20 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://D:/IIS Express/Lenovo User Backup/Desktop/Youtube-DataHarvestion-and-Warehousing/you.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-697">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/you.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="318" column="26" selection-start-line="318" selection-start-column="26" selection-end-line="318" selection-end-column="26" />
+        <state relative-caret-position="-2335">
+          <caret line="251" column="35" lean-forward="true" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

@@ -80,7 +80,7 @@ def getvideodetails(videoidslist):
                       duration=i['contentDetails']['duration'],
                       viewscount=i['statistics']['viewCount'],
                       commentcount=i['statistics'].get('commentCount'),
-                      favoriteCount=i['statistics']['favoriteCount'],
+                      favoriteCount=i['statistics']['likeCount'],
                       definition=i['contentDetails']['definition'],
                       captionstatus=i['contentDetails']['caption'],
                      )
@@ -288,8 +288,9 @@ def insertcomment(commentinfo):
         connection.commit()
 
 #streamLit
-st.title('Youtube Data Harvesting and WareHousing')
 
+st.markdown(f'<h1 style="text-align: center;">YouTube Data Harvesting and Warehousing</h1>',
+                unsafe_allow_html=True)
 
 
 def createtables():
@@ -317,96 +318,91 @@ if(st.button("Store to Database")):
         st.success("Data Collected and Stored Successfully")
 
 st.header("Channel Details")
-selectquery = ("select * from channeldetails")
+selectquery = ("""SELECT channel_name AS ChannelName,channel_subcriber AS Subcriber,
+               channel_totalviews AS TotalViews,channel_totalvideos AS TotalVideos,
+               channel_description AS Discription FROM channeldetails""")
 cursor.execute(selectquery)
 channeltable = cursor.fetchall()
 df=pd.DataFrame(channeltable,columns=cursor.column_names)
 st.dataframe(df)
 
 
-question=st.selectbox("Select your Question.",("1. All the videos and the channel names.",
-                                               "2.Channels with most number of videos.",
-                                               "3.10 Most viewed videos.",
-                                               "4.Comments in each videos.",
-                                               "5.Videos with highest likes.",
-                                               "6.Likes of all videos.",
-                                               "7.Views of each channels.",
-                                               "8.Videos published in the year of 2022.",
-                                               "9.average duration of all videos in each channel.",
-                                               "10.Videos with highest number of comments."))
+question=st.selectbox("Select your Question.",("1. What are the names of all the videos and their corresponding channels?",
+                                               "2.Which channels have the most number of videos, and how many videos do they have?",
+                                               "3.What are the top 10 most viewed videos and their respective channels?",
+                                               "4.How many comments were made on each video, and what are their corresponding video names?",
+                                               "5.Which videos have the highest number of likes, and what are their corresponding channel names?",
+                                               "6.What is the total number of likes and dislikes for each video, and what are their corresponding video names?",
+                                               "7.What is the total number of views for each channel, and what are their corresponding channel names?",
+                                               "8.What are the names of all the channels that have published videos in the year 2022",
+                                               "9.What is the average duration of all videos in each channel, and what are their corresponding channel names",
+                                               "10.Which videos have the highest number of comments, and what are their corresponding channel names"))
 
-if(question=="1. All the videos and the channel names."):
+if(question=="1. What are the names of all the videos and their corresponding channels?"):
     query="select title,channelname from videolist"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "2.Channels with most number of videos."):
+elif (question == "2.Which channels have the most number of videos, and how many videos do they have?"):
     query = "select channel_name,channel_totalvideos from channeldetails order by channel_totalvideos desc"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "3.10 Most viewed videos."):
-    query = "select channelname,viewscount from videolist order by viewscount desc"
-    cursor.execute(query)
-    q1 = cursor.fetchall()
-    df = pd.DataFrame(q1, columns=cursor.column_names)
-    st.dataframe(df)
-
-elif (question == "3.10 Most viewed videos."):
+elif (question == "3.What are the top 10 most viewed videos and their respective channels"):
     query = "select channelname,title,viewscount from videolist order by viewscount desc limit 10"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "4.Comments in each videos."):
+elif (question == "4.How many comments were made on each video, and what are their corresponding video names"):
     query = "select channelname,commentcount from videolist "
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "5.Videos with highest likes."):
+elif (question == "5.Which videos have the highest number of likes, and what are their corresponding channel names?"):
     query = "select channelname,favoriteCount from videolist order by favoriteCount desc"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "6.Likes of all videos."):
+elif (question == "6.What is the total number of likes and dislikes for each video, and what are their corresponding video names?"):
     query = "select channelname,favoriteCount from videolist"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "7.Views of each channels."):
-    query = "select channelname,channel_totalviews from channeldetails order by channel_totalviews desc"
+elif (question == "7.What is the total number of views for each channel, and what are their corresponding channel names?"):
+    query = "select channel_name,channel_totalviews from channeldetails order by channel_totalviews desc"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "8.Videos published in the year of 2022."):
-    query = "select channelname,viewscount from videolist order by viewscount desc"
+elif (question == "8.What are the names of all the channels that have published videos in the year 2022"):
+    query = "select channelname,title,publisheddate from videolist where extract(year from publisheddate)=2022"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "9.average duration of all videos in each channel."):
-    query = "select channelname,viewscount from videolist order by viewscount desc"
+elif (question == "9.What is the average duration of all videos in each channel, and what are their corresponding channel names"):
+    query = "select channelname,AVG(duration) from videolist group by channelname"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
     st.dataframe(df)
 
-elif (question == "10.Videos with highest number of comments."):
-    query = "select channelname,commentcount from videolist order by commentcount desc limit 10"
+elif (question == "10.Which videos have the highest number of comments, and what are their corresponding channel names"):
+    query = "select channelname,title,commentcount from videolist where commentcount is not null order by commentcount desc"
     cursor.execute(query)
     q1 = cursor.fetchall()
     df = pd.DataFrame(q1, columns=cursor.column_names)
